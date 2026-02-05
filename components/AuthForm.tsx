@@ -16,19 +16,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onLogin }) => {
     e.preventDefault();
     setError('');
 
-    // Hardcoded Admin Credentials
-    if (isLogin && email === 'admin@kaspintar.com' && password === 'admin123') {
-      const adminUser: User = {
-        id: 'admin-001',
-        email: 'admin@kaspintar.com',
-        name: 'Super Admin',
-        passwordHash: btoa('admin123'),
-        role: 'admin'
-      };
-      onLogin(adminUser);
-      return;
-    }
-
     const users: User[] = JSON.parse(localStorage.getItem('kaspintar_users') || '[]');
 
     if (isLogin) {
@@ -39,7 +26,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onLogin }) => {
         setError('Email atau password salah.');
       }
     } else {
-      if (users.find(u => u.email === email) || email === 'admin@kaspintar.com') {
+      if (users.find(u => u.email === email)) {
         setError('Email sudah terdaftar.');
         return;
       }
@@ -136,11 +123,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onLogin }) => {
           >
             {isLogin ? 'Belum punya akun? Daftar di sini' : 'Sudah punya akun? Masuk di sini'}
           </button>
-        </div>
-        
-        <div className="pt-4 border-t border-slate-100 text-center">
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Admin Login:</p>
-          <p className="text-[10px] text-slate-300">admin@kaspintar.com / admin123</p>
         </div>
       </div>
     </div>
